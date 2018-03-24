@@ -10,6 +10,30 @@ enum Options {
 	CONNECT_PERSONS,
 	IS_DIRECT_FRIEND,
 	DELETE_PERSON,
-	QUIT
+	QUIT;
+	
+	private static HashMap<Integer, Options> hash = new HashMap<Integer, Options>();
+	
+	static {
+		for(Options option : values()) {
+		   hash.put(option.ordinal(), option);
+		}
+	}
+	
+	public static boolean ignoreOptions(int n) {
+		Options tmp =(Options) hash.get(n);
+		
+		if(tmp == null) {
+			return true;
+		}
+		
+		return false;
+		
+	};
+	
+	public static Options getOption(int n) {
+		Options type =(Options) hash.get(n);
+		return type;
+	}
 };
 
