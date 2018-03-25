@@ -1,10 +1,16 @@
 package mininet;
 
+import java.util.*;
+
 public class Graph {
   private HashMap<Integer, Connection> network = new HashMap<Integer, Connection>();
 
   // Vertex
   public void addPerson(Person person) {
+	  Connection initializeConnection = new Connection(person);
+	  int nameHash = person.getName().hashCode();
+	  
+	  network.put(nameHash, initializeConnection);
   }
 
   // Edges
