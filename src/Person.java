@@ -13,4 +13,25 @@ public abstract class Person {
 		status = iStatus;
 		age = iAge;
 	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String iName) {
+	  name = iName;	
+	}
+	
+	public int getAge() {
+		return age;
+	}
+	
+	public void setAge(int iAge) {
+		age = iAge;
+	}
+	
+	public void display() {
+		System.out.format("%40s %5s %30s %30s", name, age, status, imageURL);
+		System.out.println();
+	}
 }

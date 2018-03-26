@@ -8,4 +8,9 @@ public class Dependent extends Person {
  public Dependent(String iName, String iImageURL, String iStatus, int iAge) {
 	 super(iName, iImageURL, iStatus, iAge);
  }
+ 
+ public void addParents(Adult father, Adult mother) {
+	 parents.add(father);
+	 parents.add(mother);
+ }
 }
