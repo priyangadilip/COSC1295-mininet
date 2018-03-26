@@ -4,7 +4,8 @@ import java.util.*;
 
 public class Graph {
   private HashMap<Integer, Connection> network = new HashMap<Integer, Connection>();
-
+  private final String DIVIDER = new String(new char[120]).replace("\0", "-");
+  
   // Vertex
   public void addPerson(Person person) {
 	  Connection initializeConnection = new Connection(person);
@@ -44,6 +45,12 @@ public class Graph {
 	  }
   }
   
+  public boolean isDirectFriend(String personAName, String personBName) {
+		 Connection connectionA = network.get(personAName.hashCode());
+
+		 return connectionA.isDirectFriend(personBName.hashCode());
+  }
+  
   public Person getPersonByName(String name) {
 	  int hash = name.hashCode();
 	  
@@ -54,5 +61,46 @@ public class Graph {
 	  }
 	  
 	  return null;
+  }
+  
+  public void linkDependentWithParents(Dependent dependent, String parentAName, String parentBName) {
+	  String dependentName = dependent.getName();
+	  
+	  Connection connectionA = network.get(parentAName.hashCode());
+	  Connection connectionB = network.get(parentBName.hashCode());
+	  
+	  Adult adultA = (Adult) connectionA.getPerson();
+      Adult adultB = (Adult) connectionB.getPerson();
+		 
+      dependent.addParents(adultA, adultB);
+
+	  connectPersons(dependentName, parentAName, Relation.PARENT);
+	  connectPersons(dependentName, parentBName, Relation.PARENT);
+	  
+	  connectPersons(parentAName, dependentName,  Relation.COUPLE);
+	  connectPersons(parentAName, parentBName,  Relation.COUPLE);
+	  
+	  connectPersons(parentBName, parentAName,  Relation.COUPLE);
+	  connectPersons(parentBName, dependentName,  Relation.COUPLE);
+	 
+  }
+  
+  // Change it - Temp
+  public void displayAll() {
+
+	  System.out.println(DIVIDER);
+	  System.out.printf("%40s %5s %30s %30s", "NAME", "AGE", "STATUS", "IMAGE URL");
+	  System.out.println();
+	  System.out.println(DIVIDER);
+		
+	  
+	  for(Map.Entry<Integer, Connection> entry: network.entrySet()) {
+		 Connection connection = (Connection) entry.getValue();
+		 Person person = connection.getPerson();
+		 
+		 person.display();
+	  }
+	  
+	  System.out.println(DIVIDER);
   }
 }
